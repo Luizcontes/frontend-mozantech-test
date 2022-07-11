@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react'
+import { getData } from './services/partsApi'
+import PartTypes from './components/PartTypes';
 
 function App() {
+
+  const [data, setData] = useState([])
+  const [target, setTarget] = useState('')
+  const [search, setSearch] = useState('')
+
+  async function getPartTypes() {
+    setData(
+      // await getData('/part-types')
+      await getData('/parts')
+    )
+  }
+  
+  console.log(data)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {/* <PartTypes
+        data={data}
+        handlePartTypes={handlePartTypes}
+      /> */}
+
+      <h1>Store Parts</h1>
+      <input ></input>
+      <button onClick={getPartTypes}>Get data</button>
+
+      {/* <lu>
+        {search || search.map( items => (
+
+        ))}
+      </lu> */}
+
+    </>
+  )
 }
 
 export default App;
