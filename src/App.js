@@ -1,40 +1,46 @@
-import './App.css';
 import { useState, useEffect } from 'react'
 import { getData } from './services/partsApi'
-import PartTypes from './components/PartTypes';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import List from './components/List'
+import Part from './components/Part';
 
 function App() {
 
-  const [data, setData] = useState([])
-  const [target, setTarget] = useState('')
-  const [search, setSearch] = useState('')
+  const [types, setTypes] = useState([])
+  const [parts, setParts] = useState([])
 
-  async function getPartTypes() {
-    setData(
-      // await getData('/part-types')
-      await getData('/parts')
-    )
+  const getPartTypes = async () => {
+    const res = await getData('/part-types')
+    setTypes(['Todos', ...res])
   }
-  
-  console.log(data)
+
+  const getParts = async () => {
+    const res = await getData('/parts')
+    setParts(res)
+  }
+
+  useEffect(() => {
+    getPartTypes()
+    getParts()
+  }, [])
+
+  console.log(parts)
 
   return (
     <>
-      {/* <PartTypes
-        data={data}
-        handlePartTypes={handlePartTypes}
-      /> */}
-
-      <h1>Store Parts</h1>
-      <input ></input>
-      <button onClick={getPartTypes}>Get data</button>
-
-      {/* <lu>
-        {search || search.map( items => (
-
-        ))}
-      </lu> */}
-
+      <BrowserRouter>
+        <h1>Store Parts</h1>
+        <Routes>
+          <Route path='/' element={
+            <>
+              <Header types={types} />
+              <List parts={parts} />
+            </>
+          } />
+          <Route path='/part' element={<Part />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

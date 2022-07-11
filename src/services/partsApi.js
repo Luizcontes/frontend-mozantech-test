@@ -10,5 +10,4 @@ export function getData(url) {
         .catch(err => console.log(err))
 
     return data
-
 }
