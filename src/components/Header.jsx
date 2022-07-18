@@ -1,16 +1,20 @@
 import './Header.css'
+import Title from './Title/Title'
 
-const Header = ({ types }) => (
+const Header = ({ title, types, type, onChangeDropDown, search, onChangeInput, listSort, sort }) => (
+    
     <div className='header'>
-        {/* <h1>Store Parts</h1> */}
+        <Title title={title}/>
         <div className='menu'>
-            <input></input>
-            <select name='types' id='types'>
+            <input value={search} onChange={onChangeInput}></input>
+            <select value={type} id='types' onChange={onChangeDropDown}>
                 {types.map((type, index) => (
                     <option key={index} value={type}>{type}</option>
                 ))}
             </select>
-            <button>Price order &#x2191;</button>
+            <button onClick={listSort}>
+                Price Order {sort ? <>&#x2191;</> : <>&#x2193;</>}
+            </button>
         </div>
         <hr/>
     </div>

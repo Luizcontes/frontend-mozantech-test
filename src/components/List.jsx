@@ -1,4 +1,5 @@
 import './List.css'
+import { Link } from 'react-router-dom'
 
 const List = ({ parts }) => (
     <div className='parts'>
@@ -6,7 +7,13 @@ const List = ({ parts }) => (
             <div className='part' key={index}>
                 <span className='name'>
                     <span className='index'>{index + 1}</span>
-                    <span>{part.name}</span>
+                    <span
+                        className='part-name'
+                        id={part.name}>
+                        <Link to='/part' state={part}>
+                            {part.name}
+                        </Link>
+                    </span>
                 </span>
                 <div className='type-price'>
                     <span>{part.type}</span>
