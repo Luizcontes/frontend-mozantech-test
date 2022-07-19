@@ -33,52 +33,45 @@ function App() {
   }
 
   const handleType = (e) => {
-    let type = e.target.value 
+    let type = e.target.value
     setType(type !== 'Todos' ? type : '')
   }
 
   const handleQuery = (e) => {
-    let search = e.target.value 
+    let search = e.target.value
     setSearch(search)
   }
 
   const listSort = () => {
-    // const partsFloat = []
-    // parts.map(part => {
-    //   let temp = {
-    //     name: part.name,
-    //     price: parseFloat(part.price),
-    //     type: part.type
-    //   }
-    //   return partsFloat.push(temp)
-    // })
 
-    // const partsFloat = 
-
-    const convertStringBack = list => {
-      const stringBack = []
-      list.map(i => {
-        let item = {
-          name: i.name,
-          price: i.price.toFixed(2) + '$',
-          type: i.type
+    const partsFloat = parts.map((item) => {
+      let newItem = { ...item }
+      for (let x in newItem) {
+        if (x === 'price') {
+          newItem[x] = parseFloat(item[x])
         }
-        stringBack.push(item)
+      }
+      return newItem
+    })
+      .sort((a, b) => sort ? b.price > a.price : a.price > b.price)
+      .map((item) => {
+        item.price = (item.price).toFixed(2) + '$'
         return item
       })
-      return stringBack
-    }
 
-    if (!sort) {
-      let list = partsFloat.sort((a, b) => a.price > b.price ? 1 : -1)
-      let listStringfied = convertStringBack(list)
-      setParts([...listStringfied])
-    } else {
-      let list = partsFloat.sort((a, b) => a.price > b.price ? -1 : 1)
-      let listStringfied = convertStringBack(list)
-      setParts([...listStringfied])
-    }
+    setParts([...partsFloat])
     setSort(sort => !sort)
+  }
+
+  const props = {
+    title: title,
+    types: types,
+    type: type,
+    onChangeDropDown: handleType,
+    search: search,
+    onChangeInput: handleQuery,
+    listSort: listSort,
+    sort: sort
   }
 
   return (
@@ -88,22 +81,12 @@ function App() {
 
           <Route path='/' element={
             <>
-              <Header
-                title={title}
-                types={types}
-                type={type}
-                onChangeDropDown={handleType}
-                search={search}
-                onChangeInput={handleQuery}
-                listSort={listSort}
-                sort={sort}
-              />
+              <Header props={props} />
               <List parts={parts} />
             </>
           } />
 
-          <Route path='/part' element={<Part title={title}/>}
-          />
+          <Route path='/part' element={<Part title={title} />} />
         </Routes>
       </BrowserRouter>
     </>

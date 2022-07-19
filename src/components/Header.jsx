@@ -1,8 +1,10 @@
 import './Header.css'
 import Title from './Title/Title'
 
-const Header = ({ title, types, type, onChangeDropDown, search, onChangeInput, listSort, sort }) => (
+const Header = ({props}) => {
+const {title, types, type, onChangeDropDown, search, onChangeInput, listSort, sort} = props
     
+    return (
     <div className='header'>
         <Title title={title}/>
         <div className='menu'>
@@ -18,6 +20,6 @@ const Header = ({ title, types, type, onChangeDropDown, search, onChangeInput, l
         </div>
         <hr/>
     </div>
-)
+)}
 
 export default Header
