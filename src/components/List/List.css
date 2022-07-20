@@ -1,0 +1,48 @@
+.part {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #555;
+    margin: 5px 2px 30px 2px;
+    padding: 25px 30px;
+    border: solid 1px;
+    border-radius: 10px;
+    /* pointer-events: none; */
+}
+
+.part:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0 2px;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    flex: 3;
+}
+
+.index {
+    margin-right: 25px;
+    text-align: center;
+    min-width: 20px;
+    max-height: 20px;
+    font-size: 15px;
+    border: solid 1px;
+    border-radius: 50%;
+}
+
+/* .part-name:hover {
+    font-weight: bold;
+    background-color: #888;
+} */
+
+a:nth-child(odd) > .part {
+    background-color: #aaa;
+}
+
+.type-price {
+    display: flex;
+    justify-content: space-between;
+    flex: 4;
+}
