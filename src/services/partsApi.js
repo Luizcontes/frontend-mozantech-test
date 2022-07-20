@@ -1,17 +1,18 @@
 import axios from "axios";
 
-export function getData(url, type, search) {
-    const api = axios.create({
+export async function getData(url, type, search) {
+    const instance = axios.create({
         baseURL: 'http://127.0.0.1:8081/store',
+        timeout: 6000,
         params: {
             type: type,
             query: search
         }
     })
 
-    const data = api.get(url)
+    const data = await instance.get(url)
         .then(res => res.data)
-        .catch(err => console.err(err))
+        .catch(err => console.log(err.config))
 
     return data
 }

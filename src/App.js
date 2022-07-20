@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { getData } from './services/partsApi'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import List from './components/List'
-import Part from './components/Part';
+import Header from './components/Header/Header';
+import List from './components/List/List'
+import Part from './components/Part/Part';
 
 function App() {
 
@@ -12,57 +12,62 @@ function App() {
   const [type, setType] = useState('')
   const [parts, setParts] = useState([])
   const [search, setSearch] = useState('')
-  const [sort, setSort] = useState(false)
+  const [sorted, setSort] = useState(false)
 
   useEffect(() => {
+    document.title = title
     getPartTypes()
   }, [])
 
   useEffect(() => {
-    getParts(type, search)
+    getParts()
   }, [type, search])
 
-  const getPartTypes = async () => {
-    const res = await getData('/part-types')
-    setTypes(['Todos', ...res])
+  // function used to get part types to render in the drop-down box 
+  async function getPartTypes() {
+    await getData('/part-types')
+      .then(res => setTypes(['Todos', ...res]))
+      .catch(err => console.log(err))
   }
 
-  const getParts = async (type, search) => {
-    const res = await getData('/parts', type, search)
-    setParts([...res])
+  // function to require parts details based in the drop-down and input values
+  async function getParts() {
+    await getData('/parts', type, search)
+      .then(res => setParts([...res]))
+      .catch(err => console.log(err))
   }
 
+  // function to capture the drop-down item selected
   const handleType = (e) => {
     let type = e.target.value
     setType(type !== 'Todos' ? type : '')
   }
 
+  // function to capture the input value inserted
   const handleQuery = (e) => {
     let search = e.target.value
     setSearch(search)
   }
 
+  // function to asc desc sort the parts list
   const listSort = () => {
 
     const partsFloat = parts.map((item) => {
       let newItem = { ...item }
-      for (let x in newItem) {
-        if (x === 'price') {
-          newItem[x] = parseFloat(item[x])
-        }
-      }
+      newItem['price'] = parseFloat(item['price'])
       return newItem
     })
-      .sort((a, b) => sort ? b.price > a.price : a.price > b.price)
+      .sort((a, b) => sorted ? b.price > a.price : a.price > b.price)
       .map((item) => {
         item.price = (item.price).toFixed(2) + '$'
         return item
       })
 
     setParts([...partsFloat])
-    setSort(sort => !sort)
+    setSort(sorted => !sorted)
   }
 
+  // props object to make the component header`s code more readable
   const props = {
     title: title,
     types: types,
@@ -71,7 +76,7 @@ function App() {
     search: search,
     onChangeInput: handleQuery,
     listSort: listSort,
-    sort: sort
+    sorted: sorted
   }
 
   return (

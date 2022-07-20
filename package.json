@@ -1,8 +1,12 @@
 {
   "name": "frontend-mozantech",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
+  "author": "Luiz Contes",
+	"description": "A teste as front-end developer for Mozantech",
+	"keywords": ["mozantech", "backend", "nodejs", "student"],
+	"license": "Contes SA",
+	"dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -35,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/Luizcontes/frontend-mozantech-test"
+	}
 }
